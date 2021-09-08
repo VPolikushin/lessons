@@ -45,9 +45,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: data.keys.map((name) {
                   return ListView(
                     key: PageStorageKey(name),
-                    children: <Widget>[
-                        for (var item in data[name])
-                          Image(image: NetworkImage(item.toString())),
+                    children: [
+                      for (var item in data[name])
+                        Container(
+                          child: Image.network(item.toString(),
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes != null
+                                      ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                      : null,
+                                ),
+                              );
+                            },
+                          ),
+                       height: 180,
+                      )
                     ],
                   );
                 }).toList(),
