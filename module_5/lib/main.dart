@@ -47,29 +47,41 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   int _currentTabIndex = 0;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   PersistentBottomSheetController _controller;
+  bool _fabVisible = true;
+
 
   void toggleBottomSheet() {
+    _fabVisible = false;
     if(_controller == null) {
       _controller = scaffoldKey.currentState.showBottomSheet(
             (context) => Container(
               height: 200,
-              color: Colors.amber,
-              child: Center(
-                child: Text('1111'),
-              ),
-          //   child: Row(
-          //     children: [
-          //       ListTile(
-          //         title: Text('Сумма'),
-          //         leading: Icon(Icons.credit_card),
-          //         trailing: Text('200 руб'),
-          //       ),
-          //     ],
-          // ),
+              color: Colors.white,
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text('Сумма'),
+                    leading: Icon(Icons.credit_card),
+                    trailing: Text('200 руб'),
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: (){},
+                      child: Text('Оплатить',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.grey[300],
+                      ),
+                    ),
+                  ),
+              ],
+          ),
         ),
       );
     } else {
       _controller.close();
+      _fabVisible = true;
       _controller = null;
     }
   }
@@ -89,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
@@ -131,19 +144,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
               children: [
                 ElevatedButton(
                   onPressed: (){},
-                  child: Text('Выход'),
+                  child: Text('Выход',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.grey,
-                    textStyle: TextStyle(
-                      color: Colors.black,
-                    ),
+                    primary: Colors.grey[300],
                   ),
                 ),
                 ElevatedButton(
                   onPressed: (){},
-                  child: Text('Регистрация'),
+                  child: Text('Регистрация',
+                    style: TextStyle(color: Colors.black),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.grey,
+                    primary: Colors.grey[300],
                   ),
                 ),
               ],
@@ -169,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
         controller: _tabController,
         children: [
           Container(
-            child: Center(child: Text('Text 1')),
+            child: Center(child: Text('$_fabVisible')),
           ),
           Container(
             child: Center(child: Text('Text 2')),
@@ -195,9 +209,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
         ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: toggleBottomSheet,
+      floatingActionButton: Visibility(
+         child: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: toggleBottomSheet,
+          ),
+          visible: _fabVisible,
       ),
     );
   }
