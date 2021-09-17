@@ -83,7 +83,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
     super.initState();
     _tabController = TabController(length: _tabBar.length, vsync: this);
     _tabController.addListener(() {
-      //print('Listener: ${_tabController.index}');
       setState(() {
         _currentTabIndex = _tabController.index;
       });
@@ -93,7 +92,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //key: scaffoldKey,
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
