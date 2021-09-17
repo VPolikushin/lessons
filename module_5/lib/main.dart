@@ -45,9 +45,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
   TabController _tabController;
   int _currentTabIndex = 0;
-  //final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  //PersistentBottomSheetController _controller;
-  //FloatingActionButton _fab;
 
   void toggleBottomSheet() {
     showModalBottomSheet<void>(
@@ -79,38 +76,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin{
         );
       },
     );
-    // if(_controller == null) {
-    //   _controller = scaffoldKey.currentState.showBottomSheet(
-    //         (context) => Container(
-    //           height: 200,
-    //           color: Colors.white,
-    //           child: Column(
-    //             children: [
-    //               ListTile(
-    //                 title: Text('Сумма'),
-    //                 leading: Icon(Icons.credit_card),
-    //                 trailing: Text('200 руб'),
-    //               ),
-    //               Center(
-    //                 child: ElevatedButton(
-    //                   onPressed: (){},
-    //                   child: Text('Оплатить',
-    //                     style: TextStyle(color: Colors.black),
-    //                   ),
-    //                   style: ElevatedButton.styleFrom(
-    //                     primary: Colors.grey[300],
-    //                   ),
-    //                 ),
-    //               ),
-    //           ],
-    //       ),
-    //     ),
-    //   );
-    // } else {
-    //   _controller.close();
-    //   _fabVisible = true;
-    //   _controller = null;
-    // }
   }
 
   @override
