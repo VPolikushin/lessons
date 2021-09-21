@@ -27,14 +27,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //var listData = List.generate(50, (index) => index);
   final ScrollController controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    // controller.addListener(() {
-    // });
   }
 
     @override
@@ -47,16 +44,18 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        controller: controller,
-        children: [
-          Column(
-            children: [
-              for(final item in fakeData(50,false))
-                item,
-            ],
-          ),
-        ],
+      body: SafeArea(
+        child: ListView(
+          controller: controller,
+          children: [
+            Column(
+              children: [
+                for(final item in fakeData(50,false))
+                  item,
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

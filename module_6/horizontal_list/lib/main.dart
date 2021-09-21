@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:horizontal_list/utils.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -30,16 +30,25 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> data = List.generate(20, (index) {
-    return Container (
-          width: 80,
-          height: 80,
-          margin: EdgeInsets.all(10),
-          color: Colors.green[100],
-          child: Text('$index'),
-        );
-    },
-  );
+  List<Color> bgColor = List.generate(10, (index) {
+    int temp = 100;
+    if (index == 0)
+      return Colors.green[temp - 50];
+    else
+      return Colors.green[temp * index];
+  });
+
+  Widget buildContainer(BuildContext context, int index) {
+    return Container(
+      child: Text('$index'),
+      height: 80,
+      width: 80,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: bgColor[index], //this is the important line
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 80,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => data[index],
+                  itemCount: bgColor.length,
+                  itemBuilder: (context, index) => buildContainer(context, index),
                 ),
               )
               : ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) => data[index],
+                  itemCount: bgColor.length,
+                  itemBuilder: (context, index) => buildContainer(context, index),
                 );
         },
       ),
