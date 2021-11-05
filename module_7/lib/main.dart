@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 List<bool> isHighlighted = [true, false];
-List<String> texts = ['Home', 'Albums'];
+List<String> texts = ['Home', 'Artists'];
 
 void main() {
   runApp(MyApp());
@@ -70,46 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Text('Home page'),
       ),
-      drawer: Drawer(
-        child: SafeArea(
-          child: ListView.builder(
-            itemCount: texts.length,
-            itemBuilder: (_, index){
-              return GestureDetector(
-                onTap: () {
-                  for (int i = 0; i < isHighlighted.length; i++) {
-                    setState(() {
-                      if (index == i) {
-                        isHighlighted[index] = true;
-                        Navigator.of(context).pushNamed('/'+'${texts[index].toLowerCase()}');
-                      } else {
-                        isHighlighted[i] = false;
-                      }
-                    });
-                  }
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    texts[index],
-                    style: TextStyle(
-                      color: isHighlighted[index] ? Colors.blue : Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ),
+      drawer: CustomDrawer(),
     );
   }
 }
 
 
 class MyAlbumsPage extends StatefulWidget {
-  static const routeName = '/albums';
+  static const routeName = '/artists';
   const MyAlbumsPage({Key key}) : super(key: key);
 
   @override
@@ -121,7 +89,7 @@ class _MyAlbumsPageState extends State<MyAlbumsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Albums'),
+        title: Text('Artists'),
       ),
       body: FutureBuilder(
         future: DefaultAssetBundle.of(context).loadString('assets/artists.json'),
@@ -140,40 +108,7 @@ class _MyAlbumsPageState extends State<MyAlbumsPage> {
           );
         },
       ),
-      drawer: Drawer(
-        child: SafeArea(
-          child: ListView.builder(
-            itemCount: texts.length,
-            itemBuilder: (_, index){
-              return GestureDetector(
-                onTap: () {
-                  for (int i = 0; i < isHighlighted.length; i++) {
-                    setState(() {
-                      if (index == i) {
-                        isHighlighted[index] = true;
-                        Navigator.of(context).pushNamed('/'+'${texts[index].toLowerCase()}');
-                        print('/'+'${texts[index].toLowerCase()}');
-                      } else {
-                        isHighlighted[i] = false;
-                      }
-                    });
-                  }
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    texts[index],
-                    style: TextStyle(
-                      color: isHighlighted[index] ? Colors.blue : Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ),
+      drawer: CustomDrawer(),
     );
   }
 }
@@ -215,6 +150,7 @@ class _MyArtistInfoPageState extends State<MyArtistInfoPage> {
           );
         },
       ),
+      drawer: CustomDrawer(),
     );
   }
 }
@@ -233,6 +169,54 @@ class _NotFoundState extends State<NotFound> {
       appBar: AppBar(),
       body: Center(
         child: Text('Not found'),
+      ),
+    );
+  }
+}
+
+class CustomDrawer extends StatefulWidget {
+  const CustomDrawer({Key key}) : super(key: key);
+
+  @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: SafeArea(
+        child: ListView.builder(
+          itemCount: texts.length,
+          itemBuilder: (_, index){
+            return GestureDetector(
+              onTap: () {
+                for (int i = 0; i < isHighlighted.length; i++) {
+                  setState(() {
+                    if (index == i) {
+                      isHighlighted[index] = true;
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamedAndRemoveUntil('/'+'${texts[index].toLowerCase()}',(route)=>false);
+                      print('/'+'${texts[index].toLowerCase()}');
+                    } else {
+                      isHighlighted[i] = false;
+                    }
+                  });
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  texts[index],
+                  style: TextStyle(
+                    color: isHighlighted[index] ? Colors.blue : Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
