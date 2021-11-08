@@ -28,32 +28,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool isError = false;
+  Future<String> _calculation;
+  @override
+  void initState() {
+    _calculation = fetchFileFromAssets('assets/data.txt');
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Catch error'),
+        title: const Text('Catch error'),
       ),
       body: FutureBuilder<String>(
-        future: fetchFileFromAssets('assets/data1.txt'),
+        future: _calculation,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if(snapshot.hasError)
-            return Center(child: Text('файл не найден'));
+          if(snapshot.hasError) {
+            return const Center(child: Text('файл не найден'));
+          }
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return Center(
+              return const Center(
                 child: Text('NONE'),
               );
               break;
             case ConnectionState.waiting:
-              return Center (child: CircularProgressIndicator ());
+              return const Center (child: CircularProgressIndicator ());
               break;
             case ConnectionState.done:
-              return SingleChildScrollView(child: Text(snapshot.data));
+              return SingleChildScrollView(child: Text(snapshot.data.toString()));
               break;
             default:
-              return SingleChildScrollView(
+              return const SingleChildScrollView(
                 child: Text('Default'),
               );
           }
