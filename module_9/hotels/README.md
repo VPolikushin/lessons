@@ -1,13 +1,16 @@
 # hotels
 
-#### Получение списка всех отелей
+A new Flutter application.
 
-`https://run.mocky.io/v3/ac888dc5-d193-4700-b12c-abb43e289301`
+## Getting Started
 
-#### Получение отеля по uuid
+This project is a starting point for a Flutter application.
 
-`https://run.mocky.io/v3/${uuid}`
+A few resources to get you started if this is your first Flutter project:
 
-#### Запуск кодогенерации
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-`flutter packages pub run build_runner build`
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

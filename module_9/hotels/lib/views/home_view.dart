@@ -6,7 +6,7 @@ import 'package:hotels/models/hotel.dart';
 import 'package:dio/dio.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -15,15 +15,17 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   bool isLoading = false;
   String url = 'https://run.mocky.io/v3/ac888dc5-d193-4700-b12c-abb43e289301';
-  //List<HotelPreview> hotels = [];
+  List<HotelPreview> hotels = [];
   final Dio _dio = Dio();
 
-   getData() async {
+  getData() async {
     setState(() {
       isLoading = true;
     });
-    final response = await _dio.get(url);
-   // response.data.map<HotelPreview>((hotel) => HotelPreview.fromJson(hotel)).toList();
+    final response = await http.get(Uri.parse(url));
+    var data = jsonDecode(response.body);
+    hotels = data.map<HotelPreview>((hotel) => HotelPreview.fromJson(hotel)).ToList();
+    print(hotels);
   }
 
   @override
